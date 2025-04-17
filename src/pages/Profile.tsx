@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { UserProfile } from '@/components/auth/UserProfile';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
 
 const Profile = () => {
   const { user, loading } = useAuth();
@@ -28,7 +29,9 @@ const Profile = () => {
         </div>
         
         <div className="max-w-md mx-auto">
-          <UserProfile />
+          <Card className="p-6 shadow-md">
+            <UserProfile />
+          </Card>
         </div>
       </main>
       
