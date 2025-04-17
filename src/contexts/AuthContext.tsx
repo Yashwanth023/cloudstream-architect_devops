@@ -22,6 +22,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check if environment variables are available
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn('Supabase not configured. Auth functionality will be limited.');
+      setLoading(false);
+      return;
+    }
+
     // Get current session
     const getSession = async () => {
       try {
