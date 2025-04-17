@@ -120,32 +120,52 @@ export const ArchitectureDiagram = ({
         {renderConnections()}
         
         {/* Render components */}
-        {components.map((component) => (
-          <g 
-            key={component.id}
-            transform={`translate(${component.x}, ${component.y})`}
-            onClick={() => handleComponentClick(component.id)}
-            onMouseEnter={() => setHoveredComponent(component.id)}
-            onMouseLeave={() => setHoveredComponent(null)}
-            style={{ cursor: 'pointer' }}
-          >
-            <rect 
-              width={component.width || 120} 
-              height={component.height || 60} 
-              rx="8" 
-              className={`${component.color} ${hoveredComponent === component.id ? 'stroke-blue-500 stroke-2' : 'stroke-gray-300'}`}
-              fill="current"
-            />
-            <foreignObject width="24" height="24" x="10" y="18">
-              <div className="text-gray-600">
-                {component.icon}
-              </div>
-            </foreignObject>
-            <text x="42" y="35" fontSize="12" fill="#334155" fontWeight="500">
-              {component.label}
-            </text>
-          </g>
-        ))}
+        {components.map((component) => {
+          const width = component.width || 120;
+          const height = component.height || 60;
+          
+          return (
+            <g 
+              key={component.id}
+              transform={`translate(${component.x}, ${component.y})`}
+              onClick={() => handleComponentClick(component.id)}
+              onMouseEnter={() => setHoveredComponent(component.id)}
+              onMouseLeave={() => setHoveredComponent(null)}
+              style={{ cursor: 'pointer' }}
+            >
+              <rect 
+                width={width} 
+                height={height} 
+                rx="8" 
+                className={`${component.color} ${hoveredComponent === component.id ? 'stroke-blue-500 stroke-2' : 'stroke-gray-300'}`}
+                fill="current"
+              />
+              <foreignObject width="24" height="24" x="10" y="18">
+                <div className="text-gray-600">
+                  {component.icon}
+                </div>
+              </foreignObject>
+              <text 
+                x="42" 
+                y="35" 
+                fontSize="12" 
+                fill="#334155" 
+                fontWeight="500"
+                textAnchor="start"
+                dominantBaseline="middle"
+                // Ensure text stays within the boundaries of the rectangle
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: `${width - 50}px`
+                }}
+              >
+                {component.label}
+              </text>
+            </g>
+          );
+        })}
       </svg>
     </div>
   );
