@@ -1,10 +1,11 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Instead of using environment variables, we'll use the Supabase connection details 
-// that are automatically provided by the Lovable platform when connecting to Supabase
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+// For Vite applications, we need to use import.meta.env instead of process.env
+// These environment variables are automatically provided by the Lovable platform
+// when connecting to Supabase
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Create a single supabase client for interacting with your database
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
